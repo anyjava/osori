@@ -1,0 +1,51 @@
+ext {
+    // http://gradle.org/download
+    gradleVersion = '2.14'
+    javaVersion = '1.8'
+}
+
+group 'in.woowa.platform.osori'
+version '0.0.1'
+
+apply plugin: 'java'
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+configurations.all {
+    //noinspection GroovyAssignabilityCheck
+    resolutionStrategy.cacheChangingModulesFor 3, 'seconds'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = gradleVersion
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    targetCompatibility = javaVersion
+    sourceCompatibility = javaVersion
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: 'http://nexus.woowa.in/content/repositories/releases')
+                snapshotRepository(url: 'http://nexus.woowa.in/content/repositories/snapshots')
+            }
+        }
+    }
+}
+

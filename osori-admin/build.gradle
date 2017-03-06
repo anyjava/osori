@@ -1,0 +1,74 @@
+apply plugin: 'spring-boot'
+
+ext {
+	appVersion = '0.0.1'
+}
+
+group 'in.woowa.platform.osori'
+version "${appVersion}"
+
+buildscript {
+	ext {
+		springBootVersion = '1.4.0.RELEASE'
+	}
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+bootRun {
+	addResources = true
+}
+
+jar {
+	baseName = 'osori-admin'
+	version = "${appVersion}"
+	//만들어지는 결과물 osori-admin-0.0.1-SNAPSHOT.jar
+}
+
+configurations {
+	//log4j 의존성을 제거
+	all*.exclude group: 'commons-logging', module: 'commons-logging'
+	all*.exclude group: 'log4j', module: 'log4j'
+	all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-devtools')
+    compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-freemarker')
+	compile('org.springframework.boot:spring-boot-starter-validation')
+	compile('org.springframework.boot:spring-boot-starter-remote-shell')
+	compile('org.springframework.boot:spring-boot-configuration-processor')
+
+    compile('org.springframework.session:spring-session')
+
+	compile('org.hibernate:hibernate-envers')
+
+	compile files('libs/spring-trace-core-1.0.2.jar')
+	compile files('libs/spring-trace-web-1.0.2.jar')
+
+	compile('org.projectlombok:lombok')
+	compile('com.google.guava:guava:19.0')
+	compile('commons-io:commons-io:2.5')
+	compile('commons-validator:commons-validator:1.4.0')
+	compile('com.zaxxer:HikariCP:2.4.5')
+	compile('org.apache.commons:commons-lang3:3.0') // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+
+	runtime('com.h2database:h2')
+	runtime('mysql:mysql-connector-java')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.mockito:mockito-all:1.10.19')
+}
+
+task appVersion << {
+	println "${appVersion}"
+}

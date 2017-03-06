@@ -1,0 +1,131 @@
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <springProfile name="default">
+
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%d{MM-dd HH:mm:ss} [%thread] %.-1level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+        </root>
+
+        <!-- 실시간 TRACE -->
+        <logger name="TRACE" level="trace" additivity="false">
+            <appender-ref ref="STDOUT" />
+        </logger>
+        <!-- 애플리케이션 예외 -->
+        <logger name="APP_ERROR" level="info" additivity="false">
+            <appender-ref ref="STDOUT" />
+        </logger>
+        <!-- 느린 로직 -->
+        <logger name="SLOW_LOGIC" level="info" additivity="false">
+            <appender-ref ref="STDOUT" />
+        </logger>
+
+    </springProfile>
+
+    <springProfile name="h2">
+
+        <appender name="ROLLING_REAL_TIME_TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>./logs/trace.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>./logs/trace-%d{yyyy-MM-dd}.log
+                </fileNamePattern>
+                <maxHistory>7</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%date{ISO8601} [%thread] %level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="ROLLING_EXCEPTION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>./logs/error.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>./logs/error-%d{yyyy-MM-dd}.log
+                </fileNamePattern>
+                <maxHistory>7</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%date{ISO8601} [%thread] %level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="ROLLING_SLOW" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>./logs/slow.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>./logs/slow-%d{yyyy-MM-dd}.log
+                </fileNamePattern>
+                <maxHistory>7</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%date{ISO8601} [%thread] %level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <!-- 애플리케이션 예외 -->
+        <logger name="APP_ERROR" level="info" additivity="false">
+            <appender-ref ref="ROLLING_EXCEPTION"/>
+        </logger>
+
+        <!-- 실시간 TRACE -->
+        <logger name="TRACE" level="info" additivity="false">
+            <appender-ref ref="ROLLING_REAL_TIME_TRACE"/>
+        </logger>
+
+        <!-- 느린 로직-->
+        <logger name="SLOW_LOGIC" level="info" additivity="false">
+            <appender-ref ref="ROLLING_SLOW"/>
+        </logger>
+    </springProfile>
+
+    <springProfile name="mysql">
+
+        <appender name="ROLLING_REAL_TIME_TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>./logs/trace.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>./logs/trace-%d{yyyy-MM-dd}.log
+                </fileNamePattern>
+                <maxHistory>3</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%date{ISO8601} [%thread] %level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="ROLLING_EXCEPTION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>./logs/error.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>./logs/error-%d{yyyy-MM-dd}.log
+                </fileNamePattern>
+                <maxHistory>3</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%date{ISO8601} [%thread] %level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="ROLLING_SLOW" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>./logs/slow.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>./logs/slow-%d{yyyy-MM-dd}.log
+                </fileNamePattern>
+                <maxHistory>3</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%date{ISO8601} [%thread] %level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+
+        <!-- 애플리케이션 예외 -->
+        <logger name="APP_ERROR" level="info" additivity="false">
+            <appender-ref ref="ROLLING_EXCEPTION"/>
+        </logger>
+
+    </springProfile>
+</configuration>

@@ -1,0 +1,4 @@
+rootProject.name = 'osori'
+include 'osori-client-core'
+include 'osori-client-spring'
+include 'osori-admin'
