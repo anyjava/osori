@@ -21,7 +21,7 @@ Spring기반의 프로젝트를 위한 라이브러리로 Interceptor, Filter형
 
 Requirements
 -------------
-[Requirements Page](https://github.com/woowabros/platform-osori/wiki/Requirements)
+[Requirements Page](https://github.com/woowabros/osori/wiki/Requirements)
 
 Quick Start
 ---------------------
@@ -34,8 +34,8 @@ osori-admin은 SpringBoot기반으로 개발되어있어서 한번 빌드후 별
 
 Admin Guide
 ------------
-[Admin Guide](https://github.com/woowabros/platform-osori/wiki/Admin-Guide)
+[Admin Guide](https://github.com/woowabros/osori/wiki/Admin-Guide)
 
 Development Notes
 ------------------
-[Development Notes](https://github.com/woowabros/platform-osori/wiki/Reference)
+[Development Notes](https://github.com/woowabros/osori/wiki/Reference)
